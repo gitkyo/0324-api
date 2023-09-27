@@ -2,4 +2,10 @@
 
 ## install dependance
 
-npm install 
+### pour installer les dépendances
+
+npm install
+
+### pour lancer le projet en dev
+
+npm run dev
