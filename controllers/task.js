@@ -6,16 +6,23 @@
 import {db} from '../db.js'
 
 //get Task data
-export const getAlltask = () => {     
+export const getAlltask = async (req, res) => {     
    
-    //on utilise la varibale db pour effectuer une requete SQL qui récupére toutes les taches
-    db.query("SELECT * FROM task ", (error, result) => {       
-    
-        if (error) {
-        throw error
-    }    
-        console.log(result)
-    }); 
+    try {
+        //on utilise la varibale db pour effectuer une requete SQL qui récupére toutes les taches
+        db.query("SELECT * FROM task ", (error, result) => {       
+        
+            if (error) throw error
+            
+            //si on a pas d'erreur on renvoi dans la réponse
+            res.send(result)
+            // console.log(result)
+        });  
+    } catch (error) {
+        res.send(error)
+    }
+
+  
   
 }
 //ici une fonction nommé getTaskFromIdUser qui prend en parametre un id

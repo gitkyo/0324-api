@@ -29,6 +29,10 @@ const app = express()
 // Je défini le port sur lequel mon serveur va écouter
 const port = 3000
 
+//indiquer a espress qu'on utilise un routeur
+import {taskRouter} from './router/task.js'
+app.use(taskRouter)
+
 //route get sur l'url /
 app.get('/', (req, res) => {
     // envoi du texte hello world
