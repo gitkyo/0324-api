@@ -1,11 +1,11 @@
 # 0324-api
 
-## install dependance
+A learning project - API Rest of a Todo-list App with a MySQL database and nodeJS & ExpressJS.
 
-### pour installer les dépendances
+## install all dependance
 
 npm install
 
-### pour lancer le projet en dev
+### to run in dev mode
 
 npm run dev
