@@ -20,11 +20,57 @@ export const getAlltask = async (req, res) => {
         });  
     } catch (error) {
         res.send(error)
+    }   
+}
+
+//get Task data from id
+export const getTaskById = async (req, res) => {
+
+    try {
+        //on récupére l'id de la tache dans l'url
+        const id = req.params.id
+
+        //on utilise la varibale db pour effectuer une requete SQL qui récupére la tache avec l'id
+        db.query("SELECT * FROM task WHERE id = ?", [id], (error, result) => {
+            if (error) throw error
+            
+            //si on a pas d'erreur on renvoi dans la réponse
+            res.send(result)
+            // console.log(result)
+        });
+    } catch (error) {
+        res.send(error)
+    }
+    
+}
+
+//
+export const postTaskById = async (req, res) => {
+    
+    try {
+        //on récupére l'id de la tache dans l'url
+        const id = req.params.id
+        const description = req.body.description
+        const completed = req.body.completed
+
+        console.log("iciiiiii")
+        //update task table from id
+        db.query("UPDATE task SET description = ?, completed = ? WHERE id = ?", [description, completed, id], (error, result) => {
+            if (error) throw error
+            
+            //si on a pas d'erreur on renvoi dans la réponse
+            res.status(201).send(result)
+            console.log(result)
+        });
+        
+    } catch (error) {
+        res.send(error)
     }
 
-  
-  
 }
+
+
+
 //ici une fonction nommé getTaskFromIdUser qui prend en parametre un id
 export const getTaskFromIdUser = (id) => {
     db.query("SELECT * FROM task WHERE owner = ?", [id], (error, result) => {
