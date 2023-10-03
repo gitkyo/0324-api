@@ -38,11 +38,14 @@ const port = 3000
 //indiquer a express qu'on peut insérer des donnée au format json
 app.use(express.json())
 
+//indiquer a express qu'on peut utiliser le moteur de template ejs
+app.set('view engine', 'ejs') 
+
 //indiquer a espress qu'on utilise un routeur
 import {taskRouter} from './router/task.js'
 app.use(taskRouter)
 
-
+ 
 
 //route get sur l'url /
 app.get('/', (req, res) => {
@@ -53,7 +56,9 @@ app.get('/', (req, res) => {
     // res.json({message: 'Hello World!'})
 
     //envoi de html
-    res.send('<h1>Hello World!</h1>') 
+    // res.send('<h1>Hello World!</h1>') 
+
+    res.render('index', {title: 'Accueil'})
 
 })
 
