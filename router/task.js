@@ -5,7 +5,7 @@ import express from "express";
 export const taskRouter = express.Router();
 
 //import controller
-import { getAlltask, getTaskById, postTaskById } from '../controllers/task.js'
+import { getAlltask, getTaskById, postTaskById, deleteTaskById, editTaskById } from '../controllers/task.js'
 
 //route get sur l'url /tasks pour obtenir toutes les taches
 taskRouter.get('/tasks', (req, res) => {
@@ -20,4 +20,14 @@ taskRouter.get('/tasks/:id', (req, res) => {
 //route du controller postTaskById 
 taskRouter.post('/tasks/:id', (req, res) => {
     postTaskById(req, res);
+})
+
+//route du controller deleteTaskById
+taskRouter.delete('/tasks/:id', (req, res) => {
+    deleteTaskById(req, res);
+})
+
+//route du controller editTaskById
+taskRouter.put('/tasks/:id', (req, res) => {
+    editTaskById(req, res);
 })

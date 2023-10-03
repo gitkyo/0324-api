@@ -44,7 +44,7 @@ export const getTaskById = async (req, res) => {
     
 }
 
-//
+
 export const postTaskById = async (req, res) => {
     
     try {
@@ -52,8 +52,51 @@ export const postTaskById = async (req, res) => {
         const id = req.params.id
         const description = req.body.description
         const completed = req.body.completed
+        
+        //insert task table from id
+        db.query("INSERT INTO task (description, completed, owner) VALUES (?, ?, ?)", [description, completed, id], (error, result) => {
+            if (error) throw error
+            
+            //si on a pas d'erreur on renvoi dans la réponse
+            res.status(201).send(result)
+            console.log(result)
+        });       
+                   
+    } catch (error) {
+        res.send(error)
+    }
 
-        console.log("iciiiiii")
+}
+
+export const deleteTaskById = async (req, res) => {
+        
+    try {
+        //on récupére l'id de la tache dans l'url
+        const id = req.params.id
+        
+        //update task table from id
+        db.query("DELETE FROM task WHERE id = ?", [id], (error, result) => {
+            if (error) throw error
+            
+            //si on a pas d'erreur on renvoi dans la réponse
+            res.status(201).send(result)
+            console.log(result)
+        });
+        
+    } catch (error) {
+        res.send(error)
+    }
+    
+}
+
+export const editTaskById = async (req, res) => {
+        
+    try {
+        //on récupére l'id de la tache dans l'url
+        const id = req.params.id
+        const description = req.body.description
+        const completed = req.body.completed
+        
         //update task table from id
         db.query("UPDATE task SET description = ?, completed = ? WHERE id = ?", [description, completed, id], (error, result) => {
             if (error) throw error
@@ -66,10 +109,11 @@ export const postTaskById = async (req, res) => {
     } catch (error) {
         res.send(error)
     }
-
+    
 }
 
 
+// old
 
 //ici une fonction nommé getTaskFromIdUser qui prend en parametre un id
 export const getTaskFromIdUser = (id) => {
