@@ -7,12 +7,24 @@
 import {db} from '../db.js'
 ici il faudra revoir toutes ces fonctions avec l'ORM sequelize
 */ 
+//import model task
+import { Task } from '../models/task.js';
 
 
-//get Task data
+//get Task data - SELECT / READ of CRUD
 export const getAlltask = async (req, res) => {     
    
     try {
+        //select all record of table task
+        const tasks = await Task.findAll();
+
+        if(!tasks) {
+            res.status(404).send('no tasks found')
+        }
+
+        res.send(tasks);       
+
+        /*         
         //on utilise la varibale db pour effectuer une requete SQL qui récupére toutes les taches
         db.query("SELECT * FROM task ", (error, result) => {       
         
@@ -22,18 +34,33 @@ export const getAlltask = async (req, res) => {
             res.send(result)
             // console.log(result)
         });  
+        */
     } catch (error) {
         res.send(error)
     }   
 }
 
-//get Task data from id
+//get Task data from id SELECT / READ of CRUD
 export const getTaskById = async (req, res) => {
 
     try {
         //on récupére l'id de la tache dans l'url
-        const id = req.params.id
+        const id = req.params.id        
 
+        //get Task By Id  with the orm sequelize and find with where clause
+        const task = await Task.findAll({
+            where: {
+                id: id
+            }
+        }); 
+
+        if(!task) {
+            res.status(404).send('no tasks found')
+        }
+
+        res.status(200).send(task);
+        
+        /*
         //on utilise la varibale db pour effectuer une requete SQL qui récupére la tache avec l'id
         db.query("SELECT * FROM task WHERE id = ?", [id], (error, result) => {
             if (error) throw error
@@ -42,13 +69,13 @@ export const getTaskById = async (req, res) => {
             res.send(result)
             // console.log(result)
         });
+        */
     } catch (error) {
         res.send(error)
-    }
-    
+    }    
 }
 
-
+// INSERT / CREATE of CRUD
 export const postTaskById = async (req, res) => {
     
     try {
@@ -57,6 +84,20 @@ export const postTaskById = async (req, res) => {
         const description = req.body.description
         const completed = req.body.completed
         
+        //postTaskById with the orm
+        const task = await Task.create({
+            description: description,
+            completed: completed,
+            owner: id
+        });
+
+        if(!task) {
+            res.status(404).send('cannot create task')
+        }
+
+        res.status(201).send(task);
+
+        /*
         //insert task table from id
         db.query("INSERT INTO task (description, completed, owner) VALUES (?, ?, ?)", [description, completed, id], (error, result) => {
             if (error) throw error
@@ -65,19 +106,35 @@ export const postTaskById = async (req, res) => {
             res.status(201).send(result)
             console.log(result)
         });       
-                   
+        */    
     } catch (error) {
         res.send(error)
     }
 
 }
 
+// DELETE / DELETE of CRUD
 export const deleteTaskById = async (req, res) => {
         
     try {
         //on récupére l'id de la tache dans l'url
         const id = req.params.id
-        
+
+        // delete Task By Id with orm
+        const task = await Task.destroy({
+            where: {
+                id: id
+            }
+        });
+
+        if(!task) {
+            res.status(404).send('task not found')
+        }
+
+        res.status(200).send('task deleted'); 
+
+
+        /*
         //update task table from id
         db.query("DELETE FROM task WHERE id = ?", [id], (error, result) => {
             if (error) throw error
@@ -86,13 +143,13 @@ export const deleteTaskById = async (req, res) => {
             res.status(201).send(result)
             console.log(result)
         });
-        
+        */
     } catch (error) {
         res.send(error)
     }
     
 }
-
+// PUT / UPDATE of CRUD
 export const editTaskById = async (req, res) => {
         
     try {
@@ -100,7 +157,24 @@ export const editTaskById = async (req, res) => {
         const id = req.params.id
         const description = req.body.description
         const completed = req.body.completed
-        
+
+        //edit task by id with orm
+        const task = await Task.update({
+            description: description,
+            completed: completed
+        }, {
+            where: {
+                id: id
+            }
+        });
+
+        if(!task) {
+            res.status(404).send('task not found')
+        }
+
+        res.status(200).send('task updated');
+
+        /*
         //update task table from id
         db.query("UPDATE task SET description = ?, completed = ? WHERE id = ?", [description, completed, id], (error, result) => {
             if (error) throw error
@@ -109,15 +183,15 @@ export const editTaskById = async (req, res) => {
             res.status(201).send(result)
             console.log(result)
         });
-        
+        */
     } catch (error) {
         res.send(error)
     }
     
 }
 
-
-// old
+/*
+    ANCIEN CONTROLLER AVEC MYSQL QUI NE SONT PLUS UTILISEE
 
 //ici une fonction nommé getTaskFromIdUser qui prend en parametre un id
 export const getTaskFromIdUser = (id) => {
@@ -217,3 +291,4 @@ export const addTaskFromNameUser = (name, description) => {
             });
         });
     }
+*/

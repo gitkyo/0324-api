@@ -1,33 +1,19 @@
 /**
  * Fichier principal de l'application
 */
-
-import {getAlltask, getTaskFromIdUser, getTaskFromNameUser, editDescTaskByID, editAllTaskByNameUser, deleteTaskByID, addTaskFromNameUser} from './controllers/task.js'
-import {customApiController} from './controllers/custom-api.js'
+// import {getAlltask, getTaskFromIdUser, getTaskFromNameUser, editDescTaskByID, editAllTaskByNameUser, deleteTaskByID, addTaskFromNameUser} from './controllers/task.js'
+// import {customApiController} from './controllers/custom-api.js'
 // getAlltask()
-
 //ici j'appelle la fonction getTaskFromIdUser avec en parametre 1
 // getTaskFromIdUser(1) 
-
 // getTaskFromNameUser('toto')
-
 // editDescTaskByID(7, 'apprendre toujours et toujours')
-
 // editAllTaskByNameUser('titi', 'apprendre un max !!')
-
 // deleteTaskByID(7)
-
 // addTaskFromNameUser('toto', 'apprendre un maxi !!')
 
-
-
-
-
-
-
-
 // Debut de mon serveur express
-import express from 'express'
+import express from 'express' 
 
 // Je crée une instance de mon serveur express
 const app = express()
@@ -43,9 +29,7 @@ app.set('view engine', 'ejs')
 
 //indiquer a espress qu'on utilise un routeur
 import {taskRouter} from './router/task.js'
-app.use(taskRouter)
-
- 
+app.use(taskRouter) 
 
 //route get sur l'url /
 app.get('/', (req, res) => {
@@ -66,7 +50,6 @@ app.get('/', (req, res) => {
 app.get('/custom-api', async (req, res) => {
     customApiController(req, res); 
 })
-
 
 //demarrage du serveur
 app.listen(port, () => {

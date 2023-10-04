@@ -1,8 +1,8 @@
 //model des taches avec sequelize
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../db/database.js';
+import { sequelize } from '../db.js';
 
-export const Task = sequelize.define("task", {
+export const Task = sequelize.define("task",  {
         description: {
             type: DataTypes.STRING,
             allowNull: false
@@ -24,4 +24,6 @@ export const Task = sequelize.define("task", {
         createdAt: false, 
         updatedAt: false        
     }
+
 ); 
+
