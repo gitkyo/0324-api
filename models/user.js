@@ -4,7 +4,7 @@ import { sequelize } from '../db.js';
 
 //export user model
 export const User = sequelize.define("user", {
-    name: {
+    nom: {
         type: DataTypes.STRING,
         allowNull: true,
         trim: true

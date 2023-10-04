@@ -29,7 +29,9 @@ app.set('view engine', 'ejs')
 
 //indiquer a espress qu'on utilise un routeur
 import {taskRouter} from './router/task.js'
+import {userRouter} from './router/user.js'
 app.use(taskRouter) 
+app.use(userRouter)
 
 //route get sur l'url /
 app.get('/', (req, res) => {
