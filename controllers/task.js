@@ -130,7 +130,16 @@ export const getTaskFromNameUser = (name) => {
         if (error) {
             console.log(error)
         }    
-            console.log(result)
+        console.log(result)
+        //boucle result pour afficher les taches
+        // for (let i = 0; i < result.length; i++) {
+        //     console.log(result[i].description)
+        // }
+
+        //boucle result pour afficher les taches
+        // result.forEach(element => {
+        //     console.log(element.description)
+        // });
         }); 
 }
 
