@@ -5,7 +5,7 @@
 //load env variables
 import dotenv from 'dotenv';
 dotenv.config();
-
+/*
 //cette ligne me permet d'importer le module mysql : https://www.npmjs.com/package/mysql
 import mysql from 'mysql'
 
@@ -37,3 +37,17 @@ try{
 }catch(error){
     console.log(error)
 }
+*/
+//connexion à la base de donnée avec ORM sequelize
+import { Sequelize } from 'sequelize';
+
+export const sequelize  = new Sequelize(
+    process.env.DB_DATABASE,
+    process.env.DB_USERNAME,
+    process.env.DB_PASSWORD,
+    {
+      host: process.env.DB_HOST,
+      dialect: process.env.DB_DIALECT
+    }
+  );
+

@@ -3,7 +3,11 @@
  * ici les fonctions qui sont exporté sont accessible depuis les autres fichiers * 
  */
 
+/*
 import {db} from '../db.js'
+ici il faudra revoir toutes ces fonctions avec l'ORM sequelize
+*/ 
+
 
 //get Task data
 export const getAlltask = async (req, res) => {     
