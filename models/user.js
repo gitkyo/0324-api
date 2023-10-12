@@ -1,6 +1,7 @@
 //model des taches avec sequelize
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../db.js';
+import { Task } from './task.js';
 
 //export user model
 export const User = sequelize.define("user", {
@@ -59,3 +60,36 @@ export const User = sequelize.define("user", {
 );
 
 
+
+
+
+//Middleware pour detecter les suppressions de taches liés à l'utilisateur
+// User.addHook('beforeDestroy', async (user) => {
+//     console.log('beforeDestroy')
+//     // await user.deleteTasks();
+// });
+
+
+//add methode destroyAllTask
+User.destroyAllTask = async (id) => {   
+    const countTasksDeleted = await Task.destroy({
+        where: {
+            owner: id
+        }
+    })
+    return countTasksDeleted;
+}
+
+
+
+
+
+// //methode pour supprimer les tâches liés à l'utilisateur
+// User.prototype.destroyAllTask = async function() {
+//     console.log('deleteTasks')
+//     // await Task.destroy({
+//     //     where: {
+//     //         owner: id
+//     //     }
+//     // })
+// }
