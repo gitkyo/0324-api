@@ -20,9 +20,9 @@ export const Task = sequelize.define("task",  {
             }
         }
     },
-    {   //option pour ne pas avoir les colonnes createdAt et updatedAt
-        createdAt: false, 
-        updatedAt: false        
+    {   //option avoir les colonnes createdAt et updatedAt
+        createdAt: true, 
+        updatedAt: true        
     }
 
 ); 
