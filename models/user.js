@@ -3,6 +3,7 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '../db.js';
 import { Task } from './task.js';
 
+
 //export user model
 export const User = sequelize.define("user", {
     nom: {
@@ -43,15 +44,20 @@ export const User = sequelize.define("user", {
         trim: true,
         validate: {
             len: {
-                args: [7, 50],
-                msg: "Password must be between 7 and 50 characters"
+                args: [7, 100],
+                msg: "Password must be between 7 and 100 characters"
             },
             notContains: {
                 args: "password",
                 msg: "Password cannot contain the word password"
             }
         }
-    },    
+    },
+    //add token to user
+    token: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    }    
     }, {
         // timestamps: false,
         createdAt: false,
@@ -59,15 +65,6 @@ export const User = sequelize.define("user", {
     }
 );
 
-
-
-
-
-//Middleware pour detecter les suppressions de taches liés à l'utilisateur
-// User.addHook('beforeDestroy', async (user) => {
-//     console.log('beforeDestroy')
-//     // await user.deleteTasks();
-// });
 
 
 //add methode destroyAllTask
@@ -80,16 +77,3 @@ User.destroyAllTask = async (id) => {
     return countTasksDeleted;
 }
 
-
-
-
-
-// //methode pour supprimer les tâches liés à l'utilisateur
-// User.prototype.destroyAllTask = async function() {
-//     console.log('deleteTasks')
-//     // await Task.destroy({
-//     //     where: {
-//     //         owner: id
-//     //     }
-//     // })
-// }

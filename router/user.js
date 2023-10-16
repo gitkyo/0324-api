@@ -5,7 +5,7 @@ import express from "express";
 export const userRouter = express.Router();
 
 //import controller
-import { getAllUser, getUserById, postUser, deleteUserById } from '../controllers/user.js'
+import { getAllUser, getUserById, postUser, deleteUserById, loginUser } from '../controllers/user.js'
 
 //route get sur l'url /tasks pour obtenir toutes les taches
 userRouter.get('/users', (req, res) => {
@@ -25,4 +25,9 @@ userRouter.post('/users', (req, res) => {
 //route delete /users/id pour supprimer un utilisateur
 userRouter.delete('/users/:id', (req, res) => {
     deleteUserById(req, res);
+})
+
+//route /login pour se connecter
+userRouter.post('/login', (req, res) => {
+    loginUser(req, res);
 })
