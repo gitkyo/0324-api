@@ -2,7 +2,7 @@
  * Fichier principal de l'application
 */
 // import {getAlltask, getTaskFromIdUser, getTaskFromNameUser, editDescTaskByID, editAllTaskByNameUser, deleteTaskByID, addTaskFromNameUser} from './controllers/task.js'
-// import {customApiController} from './controllers/custom-api.js'
+import {customApiController} from './controllers/custom-api.js'
 // getAlltask()
 //ici j'appelle la fonction getTaskFromIdUser avec en parametre 1
 // getTaskFromIdUser(1) 
@@ -33,6 +33,8 @@ import {userRouter} from './router/user.js'
 app.use(taskRouter) 
 app.use(userRouter)
 
+
+
 //route get sur l'url /
 app.get('/', (req, res) => {
     // envoi du texte hello world
@@ -51,6 +53,12 @@ app.get('/', (req, res) => {
 //route /api pour afficher une api distante que j'ai altéré
 app.get('/custom-api', async (req, res) => {
     customApiController(req, res); 
+})
+
+//middleware pour la page 404
+app.use((req, res, next) => {
+    res.status(404).send(
+        "<style>body{background: url(https://httpstatusdogs.com/img/404.jpg) no-repeat center center fixed #000000;}</style>")
 })
 
 //demarrage du serveur
