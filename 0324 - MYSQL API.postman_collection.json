@@ -21,12 +21,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/tasks/2",
-					"protocol": "http",
+					"raw": "{{url-api}}/tasks/2",
 					"host": [
-						"localhost"
+						"{{url-api}}"
 					],
-					"port": "3000",
 					"path": [
 						"tasks",
 						"2"
@@ -41,12 +39,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/tasks",
-					"protocol": "http",
+					"raw": "{{url-api}}/tasks",
 					"host": [
-						"localhost"
+						"{{url-api}}"
 					],
-					"port": "3000",
 					"path": [
 						"tasks"
 					]
@@ -60,12 +56,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/tasks/2",
-					"protocol": "http",
+					"raw": "{{url-api}}/tasks/2",
 					"host": [
-						"localhost"
+						"{{url-api}}"
 					],
-					"port": "3000",
 					"path": [
 						"tasks",
 						"2"
@@ -89,12 +83,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/tasks/8",
-					"protocol": "http",
+					"raw": "{{url-api}}/tasks/8",
 					"host": [
-						"localhost"
+						"{{url-api}}"
 					],
-					"port": "3000",
 					"path": [
 						"tasks",
 						"8"
@@ -118,12 +110,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/tasks/2",
-					"protocol": "http",
+					"raw": "{{url-api}}/tasks/2",
 					"host": [
-						"localhost"
+						"{{url-api}}"
 					],
-					"port": "3000",
 					"path": [
 						"tasks",
 						"2"
@@ -138,12 +128,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/users",
-					"protocol": "http",
+					"raw": "{{url-api}}/users",
 					"host": [
-						"localhost"
+						"{{url-api}}"
 					],
-					"port": "3000",
 					"path": [
 						"users"
 					]
@@ -157,12 +145,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/users/1",
-					"protocol": "http",
+					"raw": "{{url-api}}/users/1",
 					"host": [
-						"localhost"
+						"{{url-api}}"
 					],
-					"port": "3000",
 					"path": [
 						"users",
 						"1"
@@ -186,12 +172,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/tasks/2",
-					"protocol": "http",
+					"raw": "{{url-api}}/tasks/2",
 					"host": [
-						"localhost"
+						"{{url-api}}"
 					],
-					"port": "3000",
 					"path": [
 						"tasks",
 						"2"
@@ -202,9 +186,31 @@
 		},
 		{
 			"name": "login user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//on définit la variable authToken via la requette login \r",
+							"if(pm.response.code === 200) {   \r",
+							"    \r",
+							"    pm.environment.set('authToken', pm.response.json().token)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "^qsdfjhqsdjkhsjdqsjdkqs",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"email\":\"kuku@kuku.com\",\r\n    \"password\" : \"12345\"\r\n}",
@@ -215,12 +221,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/login",
-					"protocol": "http",
+					"raw": "{{url-api}}/login",
 					"host": [
-						"localhost"
+						"{{url-api}}"
 					],
-					"port": "3000",
 					"path": [
 						"login"
 					]
@@ -232,9 +236,73 @@
 			"name": "delete user by id",
 			"request": {
 				"method": "DELETE",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "{{url-api}}/user/1",
+					"host": [
+						"{{url-api}}"
+					],
+					"path": [
+						"user",
+						"1"
+					]
+				}
 			},
 			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-api}}/logout",
+					"host": [
+						"{{url-api}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url-api",
+			"value": "http://localhost:3000",
+			"type": "string"
 		}
 	]
 }

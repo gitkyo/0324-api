@@ -5,7 +5,8 @@ import express from "express";
 export const userRouter = express.Router();
 
 //import controller
-import { getAllUser, getUserById, postUser, deleteUserById, loginUser } from '../controllers/user.js'
+import { getAllUser, getUserById, postUser, deleteUserById, loginUser, logoutUser } from '../controllers/user.js'
+import { auth } from "../middleware/auth.js";
 
 //route get sur l'url /tasks pour obtenir toutes les taches
 userRouter.get('/users', (req, res) => {
@@ -30,4 +31,9 @@ userRouter.delete('/users/:id', (req, res) => {
 //route /login pour se connecter
 userRouter.post('/login', (req, res) => {
     loginUser(req, res);
+})
+
+//route /logout pour se déconnecter
+userRouter.post('/logout', auth, (req, res) => {
+    logoutUser(req, res);
 })

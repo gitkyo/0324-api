@@ -113,3 +113,32 @@ export const loginUser = async (req, res) => {
    
 }
 
+export const logoutUser = async (req, res) => {
+    try {
+        //on récupére le token dans le header de la requete
+        const token = req.header('Authorization').replace('Bearer ', '')
+
+        //on cherche l'utilisateur avec l'id et le token
+        const user = await User.findOne({ 
+            where: {
+                id: req.user.id,
+                token: token
+            }
+        })
+
+        if (!user) {
+            throw new Error()
+        }
+
+        //on supprime le token de l'utilisateur
+        user.token = null;
+
+        //on sauvegarde l'utilisateur en bdd
+        await user.save()
+
+        res.send('logout success')
+    } catch (error) {
+        res.status(500).send('error with logout')
+    }
+}
+
