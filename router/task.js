@@ -14,21 +14,21 @@ taskRouter.get('/tasks', auth, (req, res) => {
 })
 
 //route du controller « getTaskById » qui prend en parametre l’id d’une tâche.
-taskRouter.get('/tasks/:id', (req, res) => {    
+taskRouter.get('/tasks/:id', auth,(req, res) => {    
     getTaskById(req, res);
 })
 
 //route du controller postTaskById 
-taskRouter.post('/tasks/:id', (req, res) => {
+taskRouter.post('/tasks/:id', auth,(req, res) => {
     postTaskById(req, res);
 })
 
 //route du controller deleteTaskById
-taskRouter.delete('/tasks/:id', (req, res) => {
+taskRouter.delete('/tasks/:id', auth,(req, res) => {
     deleteTaskById(req, res);
 })
 
 //route du controller editTaskById
-taskRouter.put('/tasks/:id', (req, res) => {
+taskRouter.put('/tasks/:id', auth,(req, res) => {
     editTaskById(req, res);
 })

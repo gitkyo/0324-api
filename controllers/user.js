@@ -88,8 +88,40 @@ export const deleteUserById = async (req, res) => {
     } catch (error) { 
         res.send(error)
     }
-}    
+}
 
+export const updateUserById = async (req, res) => {
+    try {
+        //on récupére l'id de la tache dans l'url
+        const id = req.params.id        
+
+        const options = {}
+
+        if(req.body.nom) options.nom = req.body.nom
+        if(req.body.age) options.age = req.body.age
+        if(req.body.email) options.email = req.body.email
+        if(req.body.password) options.password = req.body.password
+
+        //if options is empty then throw new error
+        if(Object.keys(options).length === 0) throw "Pas de valeurs";
+             
+        //get Task By Id  with the orm sequelize and find with where clause
+        const user = await User.update(
+            options, {
+            where: {
+                id: id
+            }
+        }); 
+
+        if(!user) {
+            res.status(404).send('no users found')
+        }
+
+        res.status(200).send("user maj");
+    } catch (error) {
+        res.send(error)
+    }
+}
 
 export const loginUser = async (req, res) => {
     try {
