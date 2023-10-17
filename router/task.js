@@ -1,5 +1,6 @@
 //import express
 import express from "express";
+import { auth } from "../middleware/auth.js";
 
 //create a router
 export const taskRouter = express.Router();
@@ -8,7 +9,7 @@ export const taskRouter = express.Router();
 import { getAlltask, getTaskById, postTaskById, deleteTaskById, editTaskById } from '../controllers/task.js'
 
 //route get sur l'url /tasks pour obtenir toutes les taches
-taskRouter.get('/tasks', (req, res) => {
+taskRouter.get('/tasks', auth, (req, res) => {
     getAlltask(req, res);
 })
 

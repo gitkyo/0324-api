@@ -93,25 +93,19 @@ export const deleteUserById = async (req, res) => {
 
 export const loginUser = async (req, res) => {
     try {
-        //on récupére l'id de la tache dans l'url
-        const email = req.body.email
-        const password = req.body.password
+        //appel de la méthode verfifyCredtential pour checker si l'utilisateur existe en BDD
+        const user = await User.verfifyCredtential(req)        
 
-        //get Task By Id  with the orm sequelize and find with where clause
-        const user = await User.findAll({
-            where: {
-                email: email
-            }
-        }); 
-        
-        const isMatch = await bcrypt.compare(password, user[0].password);
+        //Si oui, génération du token via la méthode generateAuthToken
+        const token = await User.generateAuthToken(user)
 
-        if(!isMatch) {
-            res.status(404).send('bad mdp user')
-        }else{
-            res.status(200).send(user);
-        }
-              
+        //on ajouter dans les headers le fameux token sous le champs "Authorization", il sera conservé côté client dans les cookies avec une durée de vie TTL
+        res.setHeader('Authorization', token);    
+
+        //le header Access-Control-Expose-Headers permet d'exposer le header Authorization
+        res.setHeader('Access-Control-Expose-Headers', 'authorization');        
+ 
+        res.send({ user, token })   
              
     } catch (error) {
         res.status(400).send('error with login')
