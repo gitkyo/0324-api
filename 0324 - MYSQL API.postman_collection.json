@@ -321,6 +321,44 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "delete Avatar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url-api}}/users/15/avatar",
+					"host": [
+						"{{url-api}}"
+					],
+					"path": [
+						"users",
+						"15",
+						"avatar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get avatar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-api}}/users/15/avatar",
+					"host": [
+						"{{url-api}}"
+					],
+					"path": [
+						"users",
+						"15",
+						"avatar"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {

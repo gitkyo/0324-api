@@ -16,7 +16,8 @@ import {
     uploadAvatar, 
     loginUser, 
     logoutUser,
-    deleteAvatar } from '../controllers/user.js'
+    deleteAvatar,
+    getAvatar } from '../controllers/user.js'
 import { auth } from "../middleware/auth.js";
 
 //route get sur l'url /tasks pour obtenir toutes les taches
@@ -62,4 +63,9 @@ userRouter.post('/users/:id/avatar', auth, upload.single('avatar'), (req, res) =
 //route /users/:id/avatar pour supprimer une image de profil
 userRouter.delete('/users/:id/avatar', auth, (req, res) => {         
     deleteAvatar(req, res);   
+})
+
+//route /users/:id/avatar pour obtenir une image de profil
+userRouter.get('/users/:id/avatar', auth, (req, res) => {         
+    getAvatar(req, res);
 })

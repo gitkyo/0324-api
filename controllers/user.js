@@ -3,6 +3,8 @@ import { User } from '../models/user.js';
 import bcrypt from 'bcrypt';
 import multer from 'multer'
 import fs from 'fs'
+import {__dirname} from '../index.js'
+import path from 'path'
 
 
 //get User data - SELECT / READ of CRUD
@@ -215,6 +217,11 @@ export const uploadAvatar = async (req, res) => {
         //on sauvegarde l'utilisateur en bdd
         await user.save()
 
+        //on ajoute l'extension au nom du fichier avec filesystem
+        fs.rename(path, `${path}.${extension}`, (err) => {
+            if(err) throw err
+        })
+
         res.status(200).send(user)
     } catch (error) {
         res.send(error)
@@ -233,7 +240,7 @@ export const deleteAvatar = async (req, res) => {
         if(!user) throw 'no users found'
 
         //get user avatar without extension
-        const pathAvatar = user.avatar.split('.')[0]              
+        const pathAvatar = user.avatar             
 
         //delete image file
         fs.unlink(pathAvatar, (err) => {
@@ -247,6 +254,35 @@ export const deleteAvatar = async (req, res) => {
         await user.save()
 
         res.status(200).send(user)
+    } catch (error) {
+        res.send(error)
+    }
+}
+
+
+export const getAvatar = async (req, res) => {
+    try {
+        //get id user
+        const id = req.params.id
+
+        //get user by id
+        const user = await User.findByPk(id)
+
+        if(!user) throw 'no users found'
+
+        //get user avatar without extension
+        const pathAvatar = user.avatar                   
+
+        //option to send file
+        const options = {
+            root: path.join(__dirname)
+        }      
+
+        //send image file
+        res.sendFile(pathAvatar, options, (err) => {
+            if(err) throw err
+            else console.log('image envoyée')
+        })
     } catch (error) {
         res.send(error)
     }
