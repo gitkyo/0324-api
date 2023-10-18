@@ -2,6 +2,7 @@
 import { User } from '../models/user.js';
 import bcrypt from 'bcrypt';
 import multer from 'multer'
+import fs from 'fs'
 
 
 //get User data - SELECT / READ of CRUD
@@ -220,3 +221,33 @@ export const uploadAvatar = async (req, res) => {
     }
 }
 
+
+export const deleteAvatar = async (req, res) => {
+    try {
+        //get id user
+        const id = req.params.id
+
+        //get user by id
+        const user = await User.findByPk(id)
+
+        if(!user) throw 'no users found'
+
+        //get user avatar without extension
+        const pathAvatar = user.avatar.split('.')[0]              
+
+        //delete image file
+        fs.unlink(pathAvatar, (err) => {
+            if(err) throw err
+        })        
+        
+        //on suppr l'avatar 
+        user.avatar = null
+
+        //on sauvegarde l'utilisateur en bdd
+        await user.save()
+
+        res.status(200).send(user)
+    } catch (error) {
+        res.send(error)
+    }
+}
