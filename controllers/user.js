@@ -220,7 +220,7 @@ export const uploadAvatar = async (req, res) => {
         //on ajoute l'extension au nom du fichier avec filesystem
         fs.rename(path, `${path}.${extension}`, (err) => {
             if(err) throw err
-        })
+        }) 
 
         res.status(200).send(user)
     } catch (error) {

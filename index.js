@@ -30,8 +30,13 @@ app.use(express.urlencoded({ extended: true }))
 //set var to get path directory
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import path from 'path'
 const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
+const publishDirectoryPath = path.join(__dirname, './public')
+
+//set public directory
+app.use(express.static(publishDirectoryPath))
 
 //indiquer a express qu'on peut utiliser le moteur de template ejs
 app.set('view engine', 'ejs') 
