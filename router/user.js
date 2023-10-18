@@ -1,11 +1,12 @@
 //import express
 import express from "express";
+import multer from 'multer'
 
 //create a router
 export const userRouter = express.Router();
 
 //import controller
-import { getAllUser, getUserById, postUser, deleteUserById, updateUserById, loginUser, logoutUser } from '../controllers/user.js'
+import { getAllUser, getUserById, postUser, deleteUserById, updateUserById, upload, uploadAvatar, loginUser, logoutUser } from '../controllers/user.js'
 import { auth } from "../middleware/auth.js";
 
 //route get sur l'url /tasks pour obtenir toutes les taches
@@ -43,3 +44,7 @@ userRouter.post('/logout', auth, (req, res) => {
     logoutUser(req, res);
 })
 
+//route /users/:id/avatar pour ajouter une image de profil
+userRouter.post('/users/:id/avatar', auth, upload.single('avatar'), (req, res) => {         
+    uploadAvatar(req, res);   
+}) 

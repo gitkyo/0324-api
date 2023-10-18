@@ -24,6 +24,10 @@ const port = 3000
 //indiquer a express qu'on peut insérer des donnée au format json
 app.use(express.json())
 
+//indiquer a express qu'on peut insérer des donnée au format form data
+app.use(express.urlencoded({ extended: true }))
+
+
 //indiquer a express qu'on peut utiliser le moteur de template ejs
 app.set('view engine', 'ejs') 
 

@@ -18,3 +18,13 @@ You can import a Postman collection example on "0324 - MYSQL API.postman_collect
 
 You can find an export of database example on 0324.sql.zip
 
+### env variable
+
+You need to create a .env file with some infos : 
+
+DB_USERNAME='your-username-database'
+DB_PASSWORD='your-password-database'
+DB_HOST='your-host-database'
+DB_DATABASE='your-name-database'
+DB_DIALECT='your-driver-type-database'
+JWT_KEY='your-jwt-secret-phrase'

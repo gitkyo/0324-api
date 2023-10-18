@@ -1,6 +1,8 @@
 //import model user
 import { User } from '../models/user.js';
 import bcrypt from 'bcrypt';
+import multer from 'multer'
+
 
 //get User data - SELECT / READ of CRUD
 export const getAllUser = async (req, res) => {
@@ -171,6 +173,50 @@ export const logoutUser = async (req, res) => {
         res.send('logout success')
     } catch (error) {
         res.status(500).send('error with logout')
+    }
+}
+
+export const upload = multer({
+    //to upload to a specific folder, comment it to store in database
+    dest: 'images',   
+    //limit the size of the file
+    limits: {
+        fileSize: 1000000
+    },   
+    //filter the type of file
+    fileFilter(req, file, cb) {
+        //if the file doesn't match the type, return an error
+        if(!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            return cb(new Error('please upload an image'))
+        }
+        //if the file match the type, return no error
+        cb(undefined, true)
+    }
+})
+
+export const uploadAvatar = async (req, res) => {
+    try {
+        //get id user
+        const id = req.params.id
+
+        //get user by id
+        const user = await User.findByPk(id)
+
+        if(!user) throw 'no users found'
+        
+        //get file infos
+        const path = req.file.path
+        const extension = req.file.originalname.split('.')[1]        
+             
+        //on ajoute le chemin de l'image en base de donnée
+        user.avatar = `${path}.${extension}`
+
+        //on sauvegarde l'utilisateur en bdd
+        await user.save()
+
+        res.status(200).send(user)
+    } catch (error) {
+        res.send(error)
     }
 }
 

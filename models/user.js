@@ -55,6 +55,10 @@ export const User = sequelize.define("user", {
             }
         }
     },
+    avatar: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     //add token to user
     token: {
         type: DataTypes.STRING,

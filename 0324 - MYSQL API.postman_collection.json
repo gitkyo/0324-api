@@ -172,13 +172,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{url-api}}/tasks/2",
+					"raw": "{{url-api}}/users",
 					"host": [
 						"{{url-api}}"
 					],
 					"path": [
-						"tasks",
-						"2"
+						"users"
 					]
 				}
 			},
@@ -262,6 +261,62 @@
 					],
 					"path": [
 						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit user by id",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nom\" : \"pierro\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url-api}}/users/15",
+					"host": [
+						"{{url-api}}"
+					],
+					"path": [
+						"users",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload avatar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "avatar",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url-api}}/users/15/avatar",
+					"host": [
+						"{{url-api}}"
+					],
+					"path": [
+						"users",
+						"15",
+						"avatar"
 					]
 				}
 			},
