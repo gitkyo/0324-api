@@ -10,6 +10,10 @@ npm install
 
 npm run dev
 
+### to run test
+
+npm run test
+
 ### postMan
 
 You can import a Postman collection example on "0324 - MYSQL API.postman_collection.json"

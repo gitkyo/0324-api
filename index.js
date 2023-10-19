@@ -11,7 +11,7 @@ import apicache from 'apicache'
 import express from 'express' 
 
 // Je crée une instance de mon serveur express
-const app = express()
+export const app = express()
 
 // Je défini le port sur lequel mon serveur va écouter
 const port = 3000
