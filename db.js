@@ -40,7 +40,7 @@ try{
 */
 //connexion à la base de donnée avec ORM sequelize
 import { Sequelize } from 'sequelize';
-
+import process from 'process';
 export const sequelize  = new Sequelize(
     
     process.env.DB_DATABASE,

@@ -4,6 +4,7 @@ import { sequelize } from '../db.js';
 import { Task } from './task.js';
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt';
+import process from 'process';
 
 
 //export user model

@@ -1,16 +1,11 @@
 /**
  * Fichier principal de l'application
 */
-// import {getAlltask, getTaskFromIdUser, getTaskFromNameUser, editDescTaskByID, editAllTaskByNameUser, deleteTaskByID, addTaskFromNameUser} from './controllers/task.js'
 import {customApiController} from './controllers/custom-api.js'
-// getAlltask()
-//ici j'appelle la fonction getTaskFromIdUser avec en parametre 1
-// getTaskFromIdUser(1) 
-// getTaskFromNameUser('toto')
-// editDescTaskByID(7, 'apprendre toujours et toujours')
-// editAllTaskByNameUser('titi', 'apprendre un max !!')
-// deleteTaskByID(7)
-// addTaskFromNameUser('toto', 'apprendre un maxi !!')
+import helmet from "helmet";
+import { RateLimiterMemory } from "rate-limiter-flexible";
+import bodyParser from 'body-parser';
+import apicache from 'apicache'
 
 // Debut de mon serveur express
 import express from 'express' 
@@ -20,6 +15,36 @@ const app = express()
 
 // Je défini le port sur lequel mon serveur va écouter
 const port = 3000
+
+//here we cached all routes
+let cache = apicache.middleware;
+app.use(cache('5 minutes'));
+
+// set the request size limit to 1 MB
+app.use(bodyParser.json({ limit: '1mb' }));
+
+// Use Helmet to avoid security issues
+app.use(helmet());
+
+//rate limiter to avoid brute force attack
+const rateLimiter = new RateLimiterMemory({
+    points: 10, // maximum number of requests allowed
+    duration: 1, // time frame in seconds
+  });
+const rateLimiterMiddleware = (req, res, next) => {
+    rateLimiter.consume(req.ip)
+    .then(() => {
+        // request allowed, 
+        // proceed with handling the request
+        next();
+    })
+    .catch(() => {
+        // request limit exceeded, 
+        // respond with an appropriate error message
+        res.status(429).send('Too Many Requests');
+    });
+};
+app.use(rateLimiterMiddleware);
 
 //indiquer a express qu'on peut insérer des donnée au format json
 app.use(express.json())
@@ -70,7 +95,7 @@ app.get('/custom-api', async (req, res) => {
 })
 
 //middleware pour la page 404
-app.use((req, res, next) => {
+app.use((req, res) => {
     res.status(404).send(
         "<style>body{background: url(https://httpstatusdogs.com/img/404.jpg) no-repeat center center fixed #000000;}</style>")
 })
