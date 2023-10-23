@@ -30,7 +30,7 @@ userRouter.get('/users/:id', auth,(req, res) => {
 })
 
 //route post sur /users pour poster un utilisateur
-userRouter.post('/users', auth,(req, res) => {
+userRouter.post('/users', (req, res) => {
     postUser(req, res);
 })
 

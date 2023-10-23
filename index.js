@@ -6,6 +6,7 @@ import helmet from "helmet";
 import { RateLimiterMemory } from "rate-limiter-flexible";
 import bodyParser from 'body-parser';
 import apicache from 'apicache'
+import cors from 'cors'
 
 // Debut de mon serveur express
 import express from 'express' 
@@ -16,9 +17,12 @@ export const app = express()
 // Je défini le port sur lequel mon serveur va écouter
 const port = 3000
 
+//cors
+app.use(cors())
+
 //here we cached all routes
-let cache = apicache.middleware;
-app.use(cache('5 minutes'));
+// let cache = apicache.middleware;
+// app.use(cache('5 minutes'));
 
 // set the request size limit to 1 MB
 app.use(bodyParser.json({ limit: '1mb' }));

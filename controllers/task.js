@@ -9,6 +9,7 @@ ici il faudra revoir toutes ces fonctions avec l'ORM sequelize
 */ 
 //import model task
 import { Task } from '../models/task.js';
+import escape from 'escape-html';
 
 
 //get Task data - SELECT / READ of CRUD
@@ -125,10 +126,11 @@ export const getTaskById = async (req, res) => {
 export const postTaskById = async (req, res) => {
     
     try {
+
         //on récupére l'id de la tache dans l'url
         const id = req.params.id
-        const description = req.body.description
-        const completed = req.body.completed
+        const description = escape(req.body.description)
+        const completed = req.body.completed      
         
         //postTaskById with the orm
         const task = await Task.create({
@@ -201,7 +203,7 @@ export const editTaskById = async (req, res) => {
     try {
         //on récupére l'id de la tache dans l'url
         const id = req.params.id
-        const description = req.body.description
+        const description = escape(req.body.description)
         const completed = req.body.completed
 
         //edit task by id with orm
@@ -218,7 +220,7 @@ export const editTaskById = async (req, res) => {
             res.status(404).send('task not found')
         }
 
-        res.status(200).send('task updated');
+        res.status(200).send('task updated', task);
 
         /*
         //update task table from id
