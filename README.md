@@ -4,15 +4,19 @@ A learning project - API Rest of a Todo-list App with a MySQL database and nodeJ
 
 ## install all dependance
 
-npm install
+```npm install```
 
 ### to run in dev mode
 
-npm run dev
+```npm run dev```
 
 ### to run test
 
-npm run test
+```npm run test```
+
+### run doc generation
+
+```apidoc -i ./ -o public/apidoc```
 
 ### postMan
 
@@ -24,7 +28,7 @@ You can find an export of database example on 0324.sql.zip
 
 ### env variable
 
-You need to create a .env file with some infos : 
+You need to create a .env file with some infos :
 
 DB_USERNAME='your-username-database'
 DB_PASSWORD='your-password-database'

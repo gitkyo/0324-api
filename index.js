@@ -27,8 +27,12 @@ app.use(cors())
 // set the request size limit to 1 MB
 app.use(bodyParser.json({ limit: '1mb' }));
 
-// Use Helmet to avoid security issues
-app.use(helmet());
+// Use Helmet to avoid security issues with unsafe-eval option
+app.use(
+    helmet({
+      contentSecurityPolicy: false,
+    })
+);
 
 //rate limiter to avoid brute force attack
 const rateLimiter = new RateLimiterMemory({

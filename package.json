@@ -28,6 +28,7 @@
     "sequelize": "^6.33.0"
   },
   "devDependencies": {
+    "apidoc": "^1.2.0",
     "chai": "^4.3.10",
     "chai-http": "^4.4.0",
     "eslint": "^8.51.0",
