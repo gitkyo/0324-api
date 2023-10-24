@@ -58,5 +58,20 @@ describe('test api', () => {
                 })
         })
     })
+
+    /*
+    * Test the /login route with wrong credentials like kuku@kuku.com and 123456 password
+    */
+    describe('/login', () => {
+        it('it should GET code 400', (done) => {
+            chai.request(app)
+                .post('/login')
+                .send({email: 'kuku@kuku.com', password: '123456'})
+                .end((err, res) => {                    
+                    res.should.have.status(400);                                               
+                    done();
+                })
+        })
+    })
 })
            

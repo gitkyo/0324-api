@@ -7,6 +7,7 @@ import { RateLimiterMemory } from "rate-limiter-flexible";
 import bodyParser from 'body-parser';
 import apicache from 'apicache'
 import cors from 'cors'
+import process from 'process';
 
 // Debut de mon serveur express
 import express from 'express' 
@@ -15,7 +16,7 @@ import express from 'express'
 export const app = express()
 
 // Je défini le port sur lequel mon serveur va écouter
-const port = 3000
+// const port = 3000
 
 //cors
 app.use(cors())
@@ -109,9 +110,9 @@ app.use((req, res) => {
 })
 
 //demarrage du serveur
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
+app.listen(process.env.PORT, () => {
+    console.log(`Example app listening at ${process.env.BASE_URL}:${process.env.PORT}`)
+})  
 
 
 
